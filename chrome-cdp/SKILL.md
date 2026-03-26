@@ -125,6 +125,12 @@ shot <target>
 | `html`  | Medium       | Need raw HTML of a section |
 | `shot`  | Very high    | Visual debugging only (last resort) |
 
+## Examples
+
+| Example | Description |
+|---------|-------------|
+| [`examples/fetch-hook-api-capture.md`](examples/fetch-hook-api-capture.md) | Intercept SPA API responses by injecting a fetch/XHR hook via `eval` — covers inject → trigger → read → paginate workflow |
+
 ## When NOT to use this skill
 
 - Page content can be fetched statically (use `WebFetch` instead).

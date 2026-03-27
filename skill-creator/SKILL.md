@@ -1,11 +1,11 @@
 ---
 name: skill-creator
-description: Create or update reusable skills for aevitas. Use when the user asks to build a new skill, refactor repeated workflows into a skill, or improve skill structure and SKILL.md quality.
+description: Create or update reusable agent skills. Use when the user asks to build a new skill, refactor repeated workflows into a skill, or improve skill structure and SKILL.md quality.
 ---
 
 # Skill Creator
 
-Create high-quality, reusable skills for the aevitas runtime.
+Create high-quality, reusable agent skills.
 
 ## Before You Start: Gather Requirements
 
@@ -22,7 +22,7 @@ Before creating a skill, gather:
 
 If you have previous conversation context, infer the skill from what was discussed — workflows, patterns, or domain knowledge that emerged in the conversation.
 
-Use `AskUserQuestion` when requirements are ambiguous and discrete choices are needed.
+Ask the user when requirements are ambiguous and discrete choices are needed.
 
 ## Skill File Structure
 
@@ -40,8 +40,8 @@ skill-name/
 
 | Type | Path | Scope |
 |------|------|-------|
-| Project | `aevitas/skills/<skill-name>/` | Bundled with the project |
-| Runtime workspace | `~/.aevitas/workspace/.claude/skills/<skill-name>/` | Available at runtime |
+| Personal | `~/.agents/skills/<skill-name>/` | Available across all projects |
+| Project | `.agents/skills/<skill-name>/` | Bundled with the project |
 
 ## SKILL.md Requirements
 
@@ -92,7 +92,7 @@ Each skill should address a single workflow. If a skill tries to do too many thi
 
 ### 4. Maximize Determinism
 
-Skills are executed via multiple independent tool calls (Write, Bash, SendFile, etc.). Each call is stateless — no shared shell session, no persistent variables between calls.
+Skills are executed via multiple independent tool calls (file writing, shell commands, etc.). Each call is stateless — no shared session or persistent variables between calls.
 
 **Core rule**: Eliminate ambiguity at every layer — description, workflow, script parameters, and output format.
 
@@ -100,7 +100,7 @@ Skills are executed via multiple independent tool calls (Write, Bash, SendFile, 
 - **Use fixed literal paths in workflows**: The agent copies commands verbatim. Never rely on shell variables staying consistent across separate tool calls.
 - **Minimize script parameters**: Each exposed parameter is a point of failure. Only require what the agent *must* provide.
 - **Scripts return structured JSON to stdout**: The agent parses the result deterministically.
-- **Specify exact tool call sequence**: e.g. "Exactly 3 tool calls: Write → Bash → SendFile."
+- **Specify exact tool call sequence**: e.g. "Exactly 3 steps: write file → run command → deliver output."
 - **Add stop conditions**: Prevent open-ended tool loops for expensive operations.
 
 ### 5. Set Appropriate Degrees of Freedom

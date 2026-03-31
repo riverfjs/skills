@@ -182,12 +182,27 @@ After Review completes (or is skipped), launch **one** `generalPurpose` Task age
 
 ### Phase 5: Deliver
 
-After Merger completes, read `TRD.md` and present a summary to the user (no questions, just deliver):
+After Merger completes:
+
+**Step 1 — Generate manifest** (for future incremental updates by `trd-updater`):
+
+1. Read `project_profile.md` Module Assignment section.
+2. Build a JSON object mapping module names to their directory paths, e.g.:
+   ```json
+   {"chain_apis":"chain/apis/","center":"center/","public_models":"public/models/"}
+   ```
+   Use normalized names (underscores, no parenthetical notes). Merge sub-modules that belong to the same directory.
+3. Run: `python3 ~/.agents/skills/trd-writer/scripts/manifest.py {project_root} '<module_map_json>'`
+
+The script gets git HEAD commit, runs `git ls-files` for each module path, and writes `{project_root}/trd_work/manifest.json`. Returns JSON to stdout.
+
+**Step 2 — Present summary** to the user (no questions, just deliver):
 
 - Total modules documented
 - Key architecture highlights
 - Number of `[UNRESOLVED]` items (if any)
 - File path to the full TRD
+- Manifest written (commit hash recorded for future incremental updates)
 
 ## Module Splitting Rules
 

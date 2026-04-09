@@ -25,10 +25,10 @@ Personal, cross-project **agent skills**. Each skill is a folder with a required
 |-------|---------|
 | **chrome-cdp** | Chrome DevTools Protocol CLI over WebSocket: list tabs, eval, clicks, navigation. Use only after the user explicitly approves inspecting or driving a local Chrome session. Requires remote debugging and Node 22+. |
 | **skill-creator** | Authoring guide for new or updated skills: structure, frontmatter, description quality, and conventions. |
-| **trd-writer** | Multi-agent pipeline to analyze a codebase and produce a Technical Requirements Document (TRD) under `trd_work/`. |
-| **trd-updater** | Incremental TRD refresh using `git diff` and `trd_work/manifest.json` from a prior `trd-writer` run; writes versions and changelog. |
+| **trd-writer-full** | Multi-agent pipeline (Coordinator → Workers → Reviewers → Merger) to analyze a codebase and produce a Technical Requirements Document (TRD) under `trd_work/`. Includes examples for special project structures. |
+| **trd-updater** | Incremental TRD refresh using `git diff` and `trd_work/manifest.json` from a prior `trd-writer-full` run; writes versions and changelog. |
 
-**TRD pair:** Run **trd-writer** first so `manifest.json` exists; then use **trd-updater** when the repo changes.
+**TRD pair:** Run **trd-writer-full** first so `manifest.json` exists; then use **trd-updater** when the repo changes.
 
 ## Adding or changing skills
 

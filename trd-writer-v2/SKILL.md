@@ -44,7 +44,8 @@ trd-writer-v2/
 │   ├── worker_interface.md
 │   ├── worker_core_logic.md
 │   ├── worker_config_observability.md
-│   └── reviewer.md
+│   ├── reviewer.md             # READ-ONLY auditor → work-order
+│   └── fixer.md                # Phase 3.5 Edit agent
 └── scripts/
     ├── concat_trd.sh           # Concatenate sections into TRD.md
     └── manifest.py             # Generate manifest.json for incremental updates
@@ -73,8 +74,9 @@ trd-writer-v2/
 |-------|------|----------------|
 | 1 | Coordinator | project_profile.md + worker TODOs written |
 | 2 | Workers | All section_*.md files written |
-| 3 | Reviewers | All review_patches written |
-| 3.5 | Fix Issues | If Pass: No, fix missing content, re-review until ALL Pass: Yes |
+| 3 | Reviewers (READ-ONLY) | All review_patches written; each reports Pass (Required Patches = 0) |
+| 3.5 | Fixers (iff any Pass: No) | All patches applied; re-run affected Reviewers until ALL Pass: Yes |
+| 4-pre | [INFERRED] Gate | `grep '\[INFERRED\]' section_*.md` returns 0 hits |
 | 4 | Concat | TRD.md generated |
 | 5 | Deliver | Report to user, update TRD_PLAN.md |
 
@@ -109,36 +111,39 @@ Launch parallel `generalPurpose` Task agents. Read prompts from `prompts/worker_
 - Include ALL API endpoints
 - Include ALL algorithms with formulas
 
-### Phase 3: Reviewers (MANDATORY — up to 10 parallel)
+### Phase 3: Reviewers (READ-ONLY — up to 10 parallel)
 
-**This phase is MANDATORY. Do NOT skip to Phase 4 without completing all Reviews.**
+Launch parallel `generalPurpose` Task agents. Read `prompts/reviewer.md`.
 
-Launch parallel `generalPurpose` Task agents. Read `prompts/reviewer.md` for full prompt.
+- **Reviewer is READ-ONLY on `section_*.md`.** Never Edit/Write section files.
+- Reviewer's only output: `{output_dir}/review_patches_worker_{N}.md`, containing a `## Required Patches` list — each entry ready for Fixer to apply verbatim via Edit.
+- For every `[INFERRED]` tag: classify as `resolve-to-fact` (with replacement + `file:line` evidence) or `rename-to-UNRESOLVED` (with one-line evidence). Emit a patch entry per tag.
+- For every missing item / evaluative phrase / format violation / absolute path / line-count error: emit a patch entry with exact `Old text` and `New text` for Edit.
+- `Pass: Yes` iff `Required Patches = 0`. Never "Pass: Yes with patches".
+- Return: "Review complete — Patches: X, [INFERRED] classified: resolve→a/UNRESOLVED→b, Pass: Yes/No"
 
-Each Reviewer must:
-1. **TODO Audit**: Verify all checkboxes `[x]`
-2. **Coverage Verification**: Read source files, count methods, verify documented
-3. **[INFERRED] Resolution**: Cross-path search, confirm/correct/unresolved
-4. Write `{output_dir}/review_patches_worker_{N}.md`
-5. Return: "Review complete — TODO: X/Y, Coverage: X/Y, [INFERRED]: X resolved, Pass: Yes/No"
+### Phase 3.5: Fixers (only if any Reviewer returns Pass: No)
 
-**Gate condition**: ALL Reviewers must return "Pass: Yes" before proceeding to Phase 4.
+Launch one `generalPurpose` Task agent per failing worker. Read `prompts/fixer.md`.
 
-### Phase 3.5: Fix Issues (if any Reviewer returns Pass: No)
+- **Fixer is the ONLY agent with Edit permission on `section_*.md`.**
+- Fixer reads `review_patches_worker_{N}.md → ## Required Patches` and applies every entry via Edit (old_string = `Old text`, new_string = `New text`).
+- Fixer never freestyles; only apply what the patch says.
+- After apply, Fixer greps `[INFERRED]` in touched files — any leftover → Status: Blocked.
+- Re-run the affected Reviewer (same read-only prompt) to confirm Required Patches is now empty.
+- Loop until all Reviewers report `Pass: Yes`.
 
-**If ANY Reviewer reports missing content, you MUST fix before Phase 4.**
+### Phase 4-pre: [INFERRED] Gate (MANDATORY)
 
-1. **Read review_patches_worker_{N}.md** to identify missing items
-2. **For each missing item**:
-   - If function/method missing: Add to corresponding section file
-   - If field missing: Add to section_3_data_model.md
-   - If endpoint missing: Add to section_4_interface.md
-3. **Re-run affected Reviewer** to verify fix
-4. **Only proceed to Phase 4 when ALL Pass: Yes**
+Before running concat:
 
-**Do NOT skip missing content.** Do NOT justify skipping with "covered elsewhere" — each section must be complete per its scope.
+```bash
+grep -rn '\[INFERRED\]' {output_dir}/section_*.md
+```
 
-### Phase 4: Concat (ONLY after Phase 3 ALL Pass)
+Must return zero hits. Any hit → HALT, re-queue Reviewer/Fixer for the offending section. Do NOT proceed to concat otherwise.
+
+### Phase 4: Concat (ONLY after Phase 4-pre gate passes)
 
 Run concat script to generate TRD.md:
 

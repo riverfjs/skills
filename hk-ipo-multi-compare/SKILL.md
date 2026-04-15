@@ -53,10 +53,10 @@ Chrome MCP not connected. Please enable it:
 
 ```bash
 # Get TOC with page numbers
-python3 ~/.agents/skill-private/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> toc
+python3 ~/.agents/skill/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> toc
 
 # Extract specific pages
-python3 ~/.agents/skill-private/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> pages <start> <end>
+python3 ~/.agents/skill/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> pages <start> <end>
 ```
 
 ## Workflow
@@ -127,13 +127,13 @@ PDF: <session>/<code>-prospectus.pdf
 
 Steps:
 1. Get TOC:
-   python3 ~/.agents/skill-private/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> toc
+   python3 ~/.agents/skill/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> toc
 
 2. Extract pages for each module and write M1-M4 markdown files:
-   - M1 (概要): python3 ~/.agents/skill-private/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> pages <start> <end> → Write to <code>-m1-offering.md
-   - M2 (行業概覽): python3 ~/.agents/skill-private/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> pages <start> <end> → Write to <code>-m2-peers.md
-   - M3 (基石投資者): python3 ~/.agents/skill-private/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> pages <start> <end> → Write to <code>-m3-cornerstone.md
-   - M4 (財務資料): python3 ~/.agents/skill-private/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> pages <start> <end> → Write to <code>-m4-financials.md
+   - M1 (概要): python3 ~/.agents/skill/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> pages <start> <end> → Write to <code>-m1-offering.md
+   - M2 (行業概覽): python3 ~/.agents/skill/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> pages <start> <end> → Write to <code>-m2-peers.md
+   - M3 (基石投資者): python3 ~/.agents/skill/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> pages <start> <end> → Write to <code>-m3-cornerstone.md
+   - M4 (財務資料): python3 ~/.agents/skill/hk-ipo-multi-compare/scripts/extract_pdf.py <pdf> pages <start> <end> → Write to <code>-m4-financials.md
 
 3. Identify peer companies from M2 content
 

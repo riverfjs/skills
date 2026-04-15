@@ -25,10 +25,10 @@
 |------|------|
 | **chrome-cdp** | 通过 WebSocket 使用 Chrome DevTools Protocol 的轻量 CLI：列出标签页、执行 `eval`、点击、导航等。**仅在用户明确同意**调试或操作本机已打开的 Chrome 时使用。需开启远程调试、Node 22+。 |
 | **skill-creator** | 新建或迭代技能的规范：目录结构、frontmatter、`description` 写法与行文原则。 |
-| **trd-writer** | 多 Agent 分析代码库，在 `trd_work/` 下生成技术需求文档（TRD）。 |
-| **trd-updater** | 在已有 **trd-writer** 产物（含 `trd_work/manifest.json`）基础上，结合 `git diff` 做增量更新，并维护版本与变更记录。 |
+| **trd-writer-full** | 已废弃的旧版 TRD 流水线，仅保留作参考；当前请优先使用 `trd-writer-v2`。 |
+| **trd-updater** | 待更新。当前增量 TRD 刷新流程尚未同步到最新的 TRD writer 工作流。 |
 
-**TRD 配套使用：** 先跑 **trd-writer** 生成 `manifest.json`；代码变更后再用 **trd-updater** 同步文档。
+**TRD 状态：** `trd-writer-full` 已废弃，`trd-updater` 待更新。
 
 ## 新增或修改技能
 

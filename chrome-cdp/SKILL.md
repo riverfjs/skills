@@ -15,11 +15,12 @@ Lightweight Chrome DevTools Protocol CLI. Connects directly via WebSocket — no
 
 ## Hard Constraints
 
-- **Never use `shot` to read page content** — screenshots are massive base64 blobs, extremely token-costly. Only use for visual debugging as a last resort.
-- **Prefer `eval` + `getBoundingClientRect()` over `shot` to find element coords** — zero extra tokens.
-- **Use `clickxy` instead of `click <selector>` by default** — CSS selector click is intercepted by JS-driven SPAs (React, Google News, etc.); `clickxy` sends real mouse input events and is far more reliable.
-- **After clicking, always check where navigation went** — run `eval "window.location.href"` to see if current tab changed, AND run `list` to detect if a new tab was opened.
-- **Collect all data in one `eval` call** — avoid multiple sequential `eval` calls when the DOM may change between them.
+- Never use `shot` to read page content. Use it only for visual debugging as a last resort.
+- Always prefer `eval` plus `getBoundingClientRect()` over `shot` to find element coordinates.
+- Always prefer `clickxy` over `click <selector>` unless you have a specific reason to use DOM click.
+- Always check `window.location.href` and `list` after clicking.
+- Always collect volatile page data in one `eval` call when possible.
+- Never switch to MCP when the user explicitly requires CDP. CDP may have login state that MCP does not.
 
 ## Commands
 
@@ -57,6 +58,7 @@ scripts/cdp.mjs stop   [target]               # stop daemon(s)
 ## Coordinates
 
 `shot` saves at native resolution: image pixels = CSS pixels × DPR. `clickxy` takes **CSS pixels**.
+Use this conversion only if you already have a screenshot for visual debugging. Do not take a screenshot just to compute click coordinates.
 
 ```
 CSS px = screenshot px / DPR

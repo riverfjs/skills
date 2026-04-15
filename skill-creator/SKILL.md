@@ -45,11 +45,13 @@ skill-name/
 
 ## SKILL.md Requirements
 
-- Keep SKILL.md concise (prefer under 500 lines).
-- Frontmatter fields:
-  - `name`: lowercase letters, numbers, hyphens only.
-  - `description`: include WHAT and WHEN.
-- Write SKILL.md in English for consistent triggering.
+- Always keep SKILL.md under 500 lines.
+- Always write SKILL.md in English for consistent triggering.
+- Always use lowercase letters, numbers, hyphens only in `name`.
+- Always include WHAT and WHEN in `description`.
+- Always place a `## Hard Constraints` block near the top, before Workflow.
+- Always write Hard Constraints (and any other rule list) as imperative one-liners ("Always X. Never Y."). Never bury rules in prose paragraphs.
+- Never repeat the same rule in two sections — Hard Constraints is the single source of truth.
 
 ## Description Quality Rules
 
@@ -116,7 +118,7 @@ Match specificity to the task's fragility:
 ## Recommended SKILL.md Sections
 
 1. Goal
-2. Hard Constraints
+2. Hard Constraints (imperative one-liners; placed before Workflow)
 3. Workflow
 4. Output Template
 5. When NOT to use this skill
@@ -270,6 +272,8 @@ Checklist:
 
 - [ ] Description is specific, third-person, includes trigger terms.
 - [ ] SKILL.md body is under 500 lines.
+- [ ] Hard Constraints block exists, sits before Workflow, uses imperative one-liners ("Always X. Never Y.").
+- [ ] No rule appears twice; Hard Constraints is the only rule list.
 - [ ] Workflow has explicit tool-call sequence and stop conditions.
 - [ ] Tool usage limits are stated when applicable.
 - [ ] Terminology is consistent throughout.
@@ -292,7 +296,9 @@ description: Specific capability and trigger scenarios.
 One clear objective.
 
 ## Hard Constraints
-- Budget / safety / stop rules.
+- Always X. Never Y.
+- Always validate the input before step 2.
+- Never call the API more than 5 times per run.
 
 ## Workflow
 1. Step one

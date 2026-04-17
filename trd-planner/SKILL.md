@@ -22,7 +22,7 @@ Write exactly one `{project_root}/TRD_PLAN.md` containing:
 - Always produce exactly one `TRD_PLAN.md` at `{project_root}/TRD_PLAN.md`.
 - Always list modules and shared analysis conventions only. Never prescribe Worker counts, vertical slices, file-to-Worker mappings, or recommended execution order — that is the coordinator's job inside `trd-writer-v2`.
 - Always include an **分析规范 / Analysis Conventions** section covering: TRD format, project-context statement, cross-path lookup, detail depth, `[INFERRED]` handling.
-- Always group modules by **business domain** when one is identifiable (e.g. `member` vs `sumsub`). Fall back to architectural layer (`apis/`, `internal/service/`, `cmd/`) only when no domain split exists.
+- Always group modules by **business domain** when one is identifiable. Fall back to architectural layer (`apis/`, `internal/service/`, `cmd/`) only when no domain split exists.
 - Always derive module file counts from `find ... | wc -l` actually executed; never invent numbers.
 - Always read `prompts/scanner.md` before scanning, and `prompts/plan_writer.md` before writing.
 - Never embed per-module TRD content, Worker prompts, or `trd-writer-v2` execution detail.

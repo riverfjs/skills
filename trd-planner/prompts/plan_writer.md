@@ -56,8 +56,8 @@ Open `plan_template.md`, copy the block between `<!-- BEGIN TRD_PLAN.md -->` and
 For each of the 5 sections, take the default bullets from `plan_template.md`
 ("Default Bullets for Analysis Conventions") and edit so that:
 
-- Project name and module nouns are concrete (e.g. "在 UCI v2 中" instead of "in {project_name}")
-- Cross-path examples mention this project's actual layout (e.g. proto ↔ model ↔ service for UCI; `internal/data/gorm/model/` for Kratos)
+- Project name and module nouns are concrete (use the real `{project_name}` and domain names from Phase 1, not placeholder prose)
+- Cross-path examples mention this project's actual layout (e.g. contract/schema ↔ persistence ↔ service layer; or framework-specific paths the scanner found such as `internal/data/` for layered Go services)
 - Detail-depth bullets call out this project's load-bearing things (signing algorithms, state machines, cron schedules — whatever scanner found)
 
 Never delete a section. Never reduce a section to a single sentence.

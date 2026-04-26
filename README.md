@@ -42,3 +42,7 @@ Private, cross-project **agent skills**. Each skill is a folder with a required 
 
 - Parent config and design notes may live under `~/.agents/` (e.g. design docs).
 - For project-only skills, mirror the same folder layout under the project’s `.agents/skills/`.
+
+## Links
+
+- Friendly link: [Linux.do](https://linux.do)

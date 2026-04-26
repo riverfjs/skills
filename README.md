@@ -1,4 +1,4 @@
-# Agent Skills (`~/.agents/skill-private`)
+# Agent Skills (`~/.agents/skill`)
 
 Private, cross-project **agent skills**. Each skill is a folder with a required `SKILL.md` (YAML frontmatter + instructions). The runtime discovers skills and uses the `description` field to decide when to apply them.
 
@@ -16,7 +16,7 @@ Private, cross-project **agent skills**. Each skill is a folder with a required 
 
 | Location | Scope |
 |----------|--------|
-| `~/.agents/skill-private/<name>/` | All projects on this machine |
+| `~/.agents/skill/<name>/` | All projects on this machine |
 | `<project>/.agents/skills/<name>/` | That repository only |
 
 ## Skills in this directory

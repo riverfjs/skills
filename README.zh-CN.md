@@ -1,4 +1,4 @@
-# Agent 技能目录（`~/.agents/skill-private`）
+# Agent 技能目录（`~/.agents/skill`）
 
 本目录存放**私有、跨项目**的 Agent 技能。每个技能是一个文件夹，**必须**包含 `SKILL.md`（YAML 头信息 + 执行说明）。运行时根据 `description` 等字段判断何时启用该技能。
 
@@ -16,7 +16,7 @@
 
 | 路径 | 作用域 |
 |------|--------|
-| `~/.agents/skill-private/<name>/` | 本机所有项目可用 |
+| `~/.agents/skill/<name>/` | 本机所有项目可用 |
 | `<项目>/.agents/skills/<name>/` | 仅该仓库 |
 
 ## 本目录包含的技能
